@@ -50,13 +50,14 @@ data "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecs_service" "aws_ecs_service" {
-  name                 = "${var.environment}-ecs-service"
-  cluster              = aws_ecs_cluster.aws_ecs_cluster.id
-  task_definition      = "${aws_ecs_task_definition.aws_ecs_task.family}:${max(aws_ecs_task_definition.aws_ecs_task.revision, data.aws_ecs_task_definition.main.revision)}"
-  launch_type          = "FARGATE"
-  scheduling_strategy  = "REPLICA"
-  desired_count        = 1
-  force_new_deployment = true
+  name                   = "${var.environment}-ecs-service"
+  cluster                = aws_ecs_cluster.aws_ecs_cluster.id
+  task_definition        = "${aws_ecs_task_definition.aws_ecs_task.family}:${max(aws_ecs_task_definition.aws_ecs_task.revision, data.aws_ecs_task_definition.main.revision)}"
+  launch_type            = "FARGATE"
+  scheduling_strategy    = "REPLICA"
+  desired_count          = 1
+  force_new_deployment   = true
+  enable_execute_command = true
 
   network_configuration {
     subnets          = var.public_subnet_ids
