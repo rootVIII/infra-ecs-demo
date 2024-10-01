@@ -49,7 +49,7 @@ data "aws_ecs_task_definition" "main" {
   task_definition = aws_ecs_task_definition.aws_ecs_task.family
 }
 
-resource "aws_ecs_service" "aws_ecs_service" {
+resource "aws_ecs_service" "ecs_service" {
   name                   = "${var.environment}-ecs-service"
   cluster                = aws_ecs_cluster.aws_ecs_cluster.id
   task_definition        = "${aws_ecs_task_definition.aws_ecs_task.family}:${max(aws_ecs_task_definition.aws_ecs_task.revision, data.aws_ecs_task_definition.main.revision)}"
@@ -80,7 +80,7 @@ resource "aws_ecs_service" "aws_ecs_service" {
 resource "aws_appautoscaling_target" "ecs_target" {
   max_capacity       = 2
   min_capacity       = 1
-  resource_id        = "service/${aws_ecs_cluster.aws_ecs_cluster.name}/${aws_ecs_service.aws_ecs_service.name}"
+  resource_id        = "service/${aws_ecs_cluster.aws_ecs_cluster.name}/${aws_ecs_service.ecs_service.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
 }
