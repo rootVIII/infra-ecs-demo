@@ -27,3 +27,5 @@ terraform init -backend-config=backend.hcl
 terrafrom validate
 terraform plan
 terrafrom apply```
+
+# Vist the ECS Container task public IP address to view the example webapp
