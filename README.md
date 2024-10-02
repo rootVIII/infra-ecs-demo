@@ -29,3 +29,9 @@ terraform plan
 terrafrom apply```
 
 # Vist the ECS Container task public IP address to view the example webapp
+
+# Example accessing shell session:
+
+aws ecs update-service --cluster <cluster name> --service <service name> --region <region> --enable-execute-command
+aws ecs execute-command --region <region>  --cluster <cluster name>  --task "<task arn>" --container <container name> --command "/bin/sh" --interactive
+```
